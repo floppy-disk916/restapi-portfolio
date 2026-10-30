@@ -7,7 +7,7 @@ from .models import (
     UserPublic
 )
 
-from .auth import auth0, hash_password
+from .auth import hash_password
 from .db import ASesDep, select, insert, update, delete
 from sqlalchemy.orm import selectinload
 
@@ -44,20 +44,20 @@ async def get_user_by_name(
         raise HTTPException(status_code=404)
     return user
 
-@router.get("/users")
+@router.get("/users/{prod_name}")
 async def get_users_by_product_name(
         session: ASesDep,
-        prod_name: Annotated[str, Query()],
+        prod_name: str,
     ) -> Sequence[UserPublic]:
-    users = (await session.scalars(select(User,Item).join(User.items).where(Item.name == prod_name))).all()
+    users = (await session.scalars(select(User).join(User.items).where(Item.name == prod_name))).all()
     if not users:
         raise HTTPException(status_code=404)
     return users
 
 
+# claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:users"))],
 @router.post("/user", status_code=201)
 async def create_user(
-    claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:users"))],
     session: ASesDep,
     users: Sequence[AddUser]
 ):
@@ -120,9 +120,9 @@ async def partial_update_user(
     await session.refresh(user_db)
     return user_db
 
+# claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:users"))],
 @router.delete("/user")
 async def delete_user(
-    claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:users"))],
     session: ASesDep,
     names: Annotated[list[str], Query()],
 ):

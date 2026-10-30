@@ -7,7 +7,6 @@ from .models import (
     ItemPublic
 )
 
-from .auth import auth0
 from .db import ASesDep, select, insert, update, delete
 from sqlalchemy.orm import selectinload
 
@@ -43,9 +42,9 @@ async def get_item_by_name(
         raise HTTPException(status_code=404)
     return item
 
+# claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:items"))],
 @router.post("/item", status_code=201)
 async def create_item(
-    claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:items"))],
     session: ASesDep,
     items: Sequence[AddItem]
 ):
@@ -104,9 +103,9 @@ async def partial_update_item(
     await session.refresh(item_db)
     return item_db
 
+# claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:items"))],
 @router.delete("/item")
 async def delete_item(
-    claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:items"))],
     session: ASesDep,
     names: Annotated[list[str], Query()],
 ):

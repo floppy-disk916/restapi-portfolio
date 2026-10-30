@@ -8,7 +8,6 @@ from .models import (
     Order
 )
 
-from .auth import auth0
 from .db import ASesDep, select, insert, update, delete
 from sqlalchemy.orm import selectinload
 
@@ -45,9 +44,9 @@ async def get_orders_by_username(
         raise HTTPException(status_code=404)
     return orders
 
+# claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:orders"))],
 @router.post("/order", status_code=201)
 async def create_order_per_user(
-    claims: Annotated[dict, Depends(auth0.require_auth(scopes="create:orders"))],
     session: ASesDep,
     username: str,
     items: Annotated[list[str], Query()]
@@ -71,9 +70,9 @@ async def create_order_per_user(
     await session.commit()
     return {"ok": True}
 
+#claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:orders"))],
 @router.delete("/order")
 async def delete_order_per_user(
-    claims: Annotated[dict,Depends(auth0.require_auth(scopes="delete:orders"))],
     session: ASesDep,
     name: str,
     items: Annotated[list[str], Query()]

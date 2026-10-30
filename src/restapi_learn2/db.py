@@ -1,5 +1,5 @@
 
-from sqlalchemy import select, insert, update, delete, text
+from sqlalchemy import select, insert, update, delete, text, event
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession, async_sessionmaker
 from .config import DATABASE_URL
 from collections.abc import AsyncGenerator
@@ -17,6 +17,16 @@ engine = create_async_engine(
         pool_recycle=3600,
         pool_pre_ping=True,
 )
+
+@event.listens_for(engine.sync_engine, "connect")
+def on_connect(dbapi_con, connection_record):
+    logger.info(connection_record.info)
+    logger.info(connection_record.record_info)
+
+@event.listens_for(engine.sync_engine, "checkout")
+def on_checkout(dbapi_con, connection_record, connection_proxy):
+    logger.info(connection_record.info)
+    logger.info(connection_record.record_info)
 
 async_session = async_sessionmaker(engine)
 
