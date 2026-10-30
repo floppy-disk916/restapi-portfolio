@@ -1,0 +1,13 @@
+fastapi[standard]
+sqlmodel
+pwdlib[argon2]
+pyjwt[crypto]
+greenlet
+asyncpg
+psycopg[binary]
+redis
+alembic
+throttled-py
+pydantic-settings
+
+Authlib
