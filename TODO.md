@@ -1,3 +1,4 @@
+- Renaming src/restapi_learn2 to src/app or anything appropriate
 - Put and Patch route for order
 - removing session.commit() and session.refresh() methods from all user and
   order routes
