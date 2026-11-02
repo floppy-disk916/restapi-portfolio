@@ -9,5 +9,6 @@ redis[hiredis]
 alembic
 throttled-py
 pydantic-settings
+pytest-asyncio
 
 Authlib
