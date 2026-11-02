@@ -1,4 +1,4 @@
-
+- Put and Patch route for order
 - removing session.commit() and session.refresh() methods from all user and
   order routes
 - authing create and delete routes
