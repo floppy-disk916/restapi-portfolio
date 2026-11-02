@@ -3,7 +3,6 @@ from pydantic import BaseModel
 from uuid import UUID, uuid4
 from datetime import UTC, datetime, timedelta
 
-
 class Order(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     customer_id: UUID | None = Field(default=None, foreign_key="user.id", primary_key=True)
@@ -64,3 +63,4 @@ class AddItem(BaseModel):
 
 class ItemPublic(ItemBase):
     pass
+

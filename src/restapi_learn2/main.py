@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from fastapi import FastAPI, Request, Depends, Security, HTTPException
 from .models import *
 from .api import router as api_router
-from .db import check_db_health, ASesDep, select, insert, update, delete
+from .db import engine, check_db_health, ASesDep, select, insert, update, delete
 from datetime import datetime, UTC
 from typing import Annotated
 
@@ -22,6 +22,7 @@ from contextlib import asynccontextmanager
 async def lifespan(app: FastAPI):
     await check_db_health()
     yield
+    await engine.dispose()
 
 
 tags = [
@@ -69,7 +70,8 @@ async def handle_integrity(request: Request, exc: IntegrityError):
 async def handle_bad_request(request: Request, exc: InvalidRequestError):
     log.info(str(exc))
     return JSONResponse(
-        status_code=400
+        status_code=400,
+        content={"msg": "Invalid request"},
     )
 
 @app.exception_handler(DatabaseError)

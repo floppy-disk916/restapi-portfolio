@@ -5,7 +5,7 @@ pyjwt[crypto]
 greenlet
 asyncpg
 psycopg[binary]
-redis
+redis[hiredis]
 alembic
 throttled-py
 pydantic-settings

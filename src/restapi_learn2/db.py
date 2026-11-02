@@ -1,7 +1,9 @@
 
+
 from sqlalchemy import select, insert, update, delete, text, event
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, AsyncSession, async_sessionmaker
 from .config import DATABASE_URL
+from .models import SQLModel
 from collections.abc import AsyncGenerator
 from typing import Annotated
 from fastapi import Depends, HTTPException
@@ -42,5 +44,6 @@ async def check_db_health():
 async def get_session() -> AsyncGenerator[AsyncSession]:
     async with async_session() as session:
         yield session
+        await session.commit()
 
 ASesDep = Annotated[AsyncSession, Depends(get_session)]

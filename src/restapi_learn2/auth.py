@@ -34,3 +34,4 @@ def verify_password(password: str, hash: str) -> bool:
 def hash_password(password: str) -> str:
     return Hasher.hash(password)
 
+
