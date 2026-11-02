@@ -6,7 +6,7 @@ A Portfolio showcasing simple CRUD based operation using:
 - Asynchronous SQLAlchemy
 - Alembic migration
 - Pytest for unit testing
-- Redis for caching using cache aside pattern
+- Redis for caching
 - Pydantic for validation
 
 
