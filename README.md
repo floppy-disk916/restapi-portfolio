@@ -1,4 +1,3 @@
----
 # RestAPI Portfolio
 ---
 
@@ -10,7 +9,7 @@ A Portfolio showcasing simple CRUD based operation using:
 - Redis for caching using cache aside pattern
 - Pydantic for validation
 
----
+
 ## NOTE : The Portfolio is still under development
 ---
 
