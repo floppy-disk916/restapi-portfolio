@@ -15,7 +15,7 @@ Make sure you already have uv installed
 git clone https://github.com/floppy-disk916/restapi-portfolio.git
 cd restapi-portfolio
 ```
-Be sure to change the .env.example according to your system
+Copy .env.example to .env and fill in your own environment variables
 ```
 cp .env.example .env
 uv sync
