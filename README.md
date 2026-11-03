@@ -15,6 +15,10 @@ Make sure you already have uv installed
 ```
 git clone https://github.com/floppy-disk916/restapi-portfolio.git
 cd restapi-portfolio
+```
+Be sure to change the .env.example according to your system
+```
+mv .env.example .env
 uv sync
 uv run fastapi run
 ```
