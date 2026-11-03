@@ -10,7 +10,6 @@ A Portfolio showcasing simple CRUD based operation using:
 - Pydantic for validation
 
 ## How to run
----
 Make sure you already have uv installed
 ```
 git clone https://github.com/floppy-disk916/restapi-portfolio.git
@@ -20,6 +19,7 @@ Be sure to change the .env.example according to your system
 ```
 mv .env.example .env
 uv sync
+uv run alembic upgrade head
 uv run fastapi run
 ```
 
