@@ -14,11 +14,15 @@ A Portfolio showcasing simple CRUD based operation using:
 ```
 git clone github.com/floppy-disk916/restapi-portfolio.git
 cd restapi-portfolio
-source .venv/bin/activate
 ```
-- For uv
+- with uv
 ```
 uv run fastapi run
+```
+- with pip
+```
+source .venv/bin/activate
+fastapi run
 ```
 
 ## NOTE : The Portfolio is still under development
