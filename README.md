@@ -11,18 +11,12 @@ A Portfolio showcasing simple CRUD based operation using:
 
 ## How to run
 ---
+Make sure you already have uv installed
 ```
 git clone https://github.com/floppy-disk916/restapi-portfolio.git
 cd restapi-portfolio
-```
-- with uv
-```
+uv sync
 uv run fastapi run
-```
-- with pip
-```
-source .venv/bin/activate
-fastapi run
 ```
 
 ## NOTE : The Portfolio is still under development
