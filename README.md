@@ -12,7 +12,7 @@ A Portfolio showcasing simple CRUD based operation using:
 ## How to run
 ---
 ```
-git clone github.com/floppy-disk916/restapi-portfolio.git
+git clone https://github.com/floppy-disk916/restapi-portfolio.git
 cd restapi-portfolio
 ```
 - with uv
