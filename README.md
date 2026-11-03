@@ -17,7 +17,7 @@ cd restapi-portfolio
 ```
 Be sure to change the .env.example according to your system
 ```
-mv .env.example .env
+cp .env.example .env
 uv sync
 uv run alembic upgrade head
 uv run fastapi run
