@@ -1457,7 +1457,7 @@ wheels = [
 ]
 
 [[package]]
-name = "restapi-learn2"
+name = "restapi-portfolio"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [

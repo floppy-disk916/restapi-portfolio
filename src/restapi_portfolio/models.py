@@ -9,6 +9,9 @@ class Order(SQLModel, table=True):
     item_id: UUID | None = Field(default=None, foreign_key="item.id", primary_key=True)
     create_at: datetime = Field(default_factory=datetime.now(UTC))
  
+class RefreshToken(BaseModel):
+    refresh_token: str
+
 class Token(BaseModel):
     access_token: str
     token_type: str

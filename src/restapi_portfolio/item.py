@@ -14,6 +14,7 @@ from .cache import (
     inval_cache
 )
 
+from .auth import check_token
 from .db import ASesDep, select, insert, update, delete
 from sqlalchemy.orm import selectinload
 
@@ -27,7 +28,7 @@ from fastapi import (
 from typing import Annotated
 from collections.abc import Sequence
 
-router = APIRouter(tags=["Item"])
+router = APIRouter(tags=["Item"], dependencies=[Depends(check_token)])
 
 @router.get("/items")
 async def get_items(
@@ -38,8 +39,7 @@ async def get_items(
 
     items = (await session.scalars(select(Item).offset(offset).limit(limit).options(selectinload(Item.customers)).order_by(Item.id))).all()
     if not items:
-        raise HTTPException(status_code=404)
-    
+        raise HTTPException(status_code=404)    
     return items
 
 

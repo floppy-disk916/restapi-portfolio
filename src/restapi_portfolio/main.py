@@ -2,6 +2,7 @@
 from fastapi.responses import JSONResponse
 from fastapi import FastAPI, Request, Depends, Security, HTTPException
 from .models import *
+from .auth import router as auth_router
 from .api import router as api_router
 from .db import engine, check_db_health, ASesDep, select, insert, update, delete
 from datetime import datetime, UTC
@@ -46,6 +47,7 @@ app = FastAPI(
     )
 
 app.include_router(api_router)
+app.include_router(auth_router)
 
 log = logging.getLogger('handler_log')
 

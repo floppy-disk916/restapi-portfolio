@@ -1,5 +1,4 @@
 # RestAPI Portfolio
----
 
 A Portfolio showcasing simple CRUD based operation using:
 - FastAPI for backend
@@ -24,6 +23,5 @@ uv run fastapi run
 ```
 
 ## NOTE : The Portfolio is still under development
----
 
 TODO.md file explains what it lacks of

@@ -1,7 +1,7 @@
 [project]
-name = "restapi-learn2"
+name = "restapi-portfolio"
 version = "0.1.0"
-description = "Add your description here"
+description = "REST API Portfolio"
 readme = "README.md"
 authors = [
     { name = "Muhammad Rifqi", email = "mrifqi29121@gmail.com" }
@@ -24,7 +24,7 @@ dependencies = [
 ]
 
 [project.scripts]
-restapi-learn2 = "restapi_learn2:main"
+restapi-portfolio = "restapi_portfolio:main"
 
 [build-system]
 requires = ["uv_build>=0.12.18,<0.13.0"]
@@ -32,7 +32,7 @@ build-backend = "uv_build"
 
 
 [tool.fastapi]
-entrypoint = "src.restapi_learn2.main:app"
+entrypoint = "src.restapi_portfolio.main:app"
 
 [tool.pytest]
 minversion = "9.0"
