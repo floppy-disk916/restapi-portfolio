@@ -1,12 +1,13 @@
 # RestAPI Portfolio
 
 A Portfolio showcasing simple CRUD based operation using:
-- FastAPI for backend
+- FastAPI for backend and OAuth Flow
 - Asynchronous SQLAlchemy
 - Alembic migration
-- Pytest for unit testing
+- Pytest and httpx for unit testing
 - Redis for caching
 - Pydantic for validation
+
 
 ## How to run
 Make sure you already have uv installed

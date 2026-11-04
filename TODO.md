@@ -5,3 +5,5 @@
 - authing create and delete routes
 - session and cookie management
 - main.py and middleware
+- complete the test suites
+- add cache aside pattern on both user and order routes
