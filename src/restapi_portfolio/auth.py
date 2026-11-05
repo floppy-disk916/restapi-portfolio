@@ -1,8 +1,6 @@
 from fastapi.security import (
-    OAuth2AuthorizationCodeBearer,
     OAuth2PasswordRequestForm,
     OAuth2PasswordBearer,
-    SecurityScopes,
 )
 
 from fastapi import APIRouter, Request, Response, Depends, HTTPException
