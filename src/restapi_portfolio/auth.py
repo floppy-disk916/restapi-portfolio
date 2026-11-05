@@ -11,7 +11,7 @@ from uuid import uuid4
 
 from .db import ASesDep, AsyncSession, select
 from .models import User, Token, RefreshToken
-from .config import JWT_EXPIRE_MIN, JWT_ALGO, SECRET_KEY, AUTH0_DOMAIN, AUTH0_API_AUDIENCE
+from .config import JWT_EXPIRE_MIN, JWT_ALGO, PUBLIC_KEY, PRIVATE_KEY
 
 from typing import Annotated
 
@@ -68,24 +68,22 @@ async def verify_user(session: AsyncSession, username: str, password: str) -> bo
         return None
     return user
 
-async def init_token(user: User) -> Token:
-    try:
-        exp = datetime.now(UTC) + timedelta(minutes=JWT_EXPIRE_MIN)
-        payload = {"sub": user.username, "exp": exp}
-        access_token = jwt.encode(payload, SECRET_KEY, algorithm=JWT_ALGO)
-        token = Token(access_token=access_token, token_type="bearer")
-        return token
-    except (ValidationError, TypeError):
-        raise HTTPException(status_code=500, detail="Token failure")
+async def init_access_token(data: dict, expire_min: timedelta | None = None) -> Token:
+    to_encode = data.copy()
+    if expire_min:
+        expire = datetime.now(UTC) +  expire_min
+    else:
+        expire = datetime.now(UTC) + timedelta(minutes=15)
+    to_encode.update({"exp": expire})
+    access_token = jwt.encode(to_encode, PRIVATE_KEY, algorithm=JWT_ALGO)
+    return access_token
 
 async def check_token(session: ASesDep, token: Annotated[str, Depends(login_scheme)]) -> User:
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[JWT_ALGO])
+        payload = jwt.decode(token, PUBLIC_KEY, algorithms=[JWT_ALGO])
         exp = payload.get("exp")
         if exp is None:
             raise HTTPException(status_code=401, detail="Missing credential")
-        if exp <= datetime.now(UTC):
-            raise HTTPException(status_code=401, detail="Expired")
         username = payload.get("sub")
         if username is None:
             raise HTTPException(status_code=401, detail="Missing credential")        
@@ -102,6 +100,7 @@ async def login(session: ASesDep, form: Annotated[OAuth2PasswordRequestForm,Depe
     user = await verify_user(session, form.username, form.password)
     if user is None:
         raise HTTPException(status_code=401)
-    token = await init_token(user)
-    return token
+    ACCESS_TOKEN_EXPIRE_MIN = timedelta(minutes=JWT_EXPIRE_MIN)
+    access_token = await init_access_token({"sub": user.username}, ACCESS_TOKEN_EXPIRE_MIN)
+    return Token(access_token=access_token, token_type="bearer")
     
